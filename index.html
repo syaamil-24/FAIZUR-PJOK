@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PJOK Panahan - Media Pembelajaran Interaktif</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        archery: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        target: {
+                            gold: '#facc15',
+                            red: '#ef4444',
+                            blue: '#3b82f6',
+                            black: '#1e293b',
+                            white: '#f8fafc'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Space Grotesk', 'sans-serif'],
+                        body: ['DM Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #F0FDF4;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.02em;
+        }
+        .target-spin {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .target-spin:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+        .arrow-pulse {
+            animation: arrowFloat 2.5s ease-in-out infinite;
+        }
+        @keyframes arrowFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(-3deg); }
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen selection:bg-archery-500 selection:text-white">
+
+    <!-- NAVIGATION HEADER -->
+    <header class="sticky top-0 z-50 bg-slate-900 text-white shadow-xl border-b-4 border-archery-500">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#hero" class="flex items-center gap-3 group">
+                <div class="bg-archery-500 text-slate-950 p-2 rounded-2xl font-bold text-xl w-10 h-10 flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-black tracking-tight leading-tight font-heading text-white">
+                        PJOK <span class="text-archery-500">PANAHAN</span>
+                    </h1>
+                    <p class="text-xs text-slate-300 font-medium hidden sm:block">
+                        MUHAMMAD FAIZUR RAHMAN | NPM: 41182191240050
+                    </p>
+                </div>
+            </a>
+            
+            <nav class="hidden md:flex items-center gap-2 font-heading font-semibold text-sm">
+                <a href="#pengenalan" class="px-3 py-1.5 rounded-xl hover:bg-slate-800 transition">Peralatan</a>
+                <a href="#ai-simulator" class="px-3 py-1.5 rounded-xl hover:bg-slate-800 transition text-target-gold font-bold flex items-center gap-1.5">
+                    <i class="fa-solid fa-crosshair"></i> Simulator Memanah
+                </a>
+                <a href="#teknik" class="px-3 py-1.5 rounded-xl hover:bg-slate-800 transition">Teknik Memanah</a>
+                <a href="#penilaian" class="px-3 py-1.5 rounded-xl hover:bg-slate-800 transition">Skor Target</a>
+                <a href="#kuis" class="px-3 py-1.5 bg-archery-500 text-slate-950 font-bold rounded-xl hover:bg-archery-600 hover:text-white transition shadow-md">Kuis Interaktif</a>
+                <a href="#pembuat" class="px-3 py-1.5 rounded-xl hover:bg-slate-800 transition text-archery-500">Profil Pembuat</a>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-white text-2xl focus:outline-none p-1">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-950 px-4 pt-2 pb-4 space-y-2 font-heading border-t border-slate-800">
+            <a href="#pengenalan" class="block py-2 px-3 hover:bg-slate-800 rounded-xl text-white">Peralatan</a>
+            <a href="#ai-simulator" class="block py-2 px-3 hover:bg-slate-800 rounded-xl text-target-gold font-bold">Simulator Memanah 🎯</a>
+            <a href="#teknik" class="block py-2 px-3 hover:bg-slate-800 rounded-xl text-white">Teknik Memanah</a>
+            <a href="#penilaian" class="block py-2 px-3 hover:bg-slate-800 rounded-xl text-white">Skor Target</a>
+            <a href="#kuis" class="block py-2 px-3 bg-archery-500 text-slate-950 font-bold rounded-xl">Kuis Interaktif</a>
+            <a href="#pembuat" class="block py-2 px-3 hover:bg-slate-800 rounded-xl text-archery-500">Profil Pembuat</a>
+        </div>
+    </header>
+
+    <!-- HERO BANNER -->
+    <section id="hero" class="bg-gradient-to-br from-slate-950 via-slate-900 to-archery-900 text-white py-12 md:py-16 px-4 relative overflow-hidden">
+        <!-- Archery Background Pattern Grid -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#10B981_1px,transparent_1px)] [background-size:20px_20px]"></div>
+
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+            <div class="text-center md:text-left md:w-3/5 space-y-4">
+                <span class="bg-archery-500 text-slate-950 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-flex items-center gap-1.5 shadow-md font-heading">
+                    🎯 Media Pembelajaran PJOK Interaktif
+                </span>
+                <h2 class="text-3xl md:text-5xl font-extrabold leading-tight font-heading tracking-tight">
+                    KUASAI TEKNIK DASAR <br/><span class="text-archery-500">OLAHRAGA PANAHAN</span>
+                </h2>
+                <p class="text-slate-300 text-base md:text-lg font-normal leading-relaxed">
+                    Pelajari 9 langkah dasar memanah, pengenalan busur dan anak panah, hingga simulasi tembakan target interaktif berbasis fisika 2D canvas dengan fitur audio narasi lengkap!
+                </p>
+                
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
+                    <a href="#ai-simulator" class="bg-archery-500 text-slate-950 font-bold px-6 py-3 rounded-2xl hover:bg-archery-600 hover:text-white transform hover:-translate-y-1 transition shadow-lg flex items-center gap-2 font-heading">
+                        <i class="fa-solid fa-crosshair text-lg"></i> Coba Simulator Memanah
+                    </a>
+                    <a href="#kuis" class="bg-white/10 hover:bg-white/20 border-2 border-white/30 text-white px-6 py-3 rounded-2xl font-bold transform hover:-translate-y-1 transition shadow-md flex items-center gap-2 font-heading">
+                        <i class="fa-solid fa-gamepad"></i> Uji Kuis
+                    </a>
+                </div>
+
+                <!-- Creator Credit Card Banner -->
+                <div class="pt-4 border-t border-slate-700/70 text-xs text-slate-300 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-archery-500 text-slate-950 font-bold flex items-center justify-center text-sm font-heading flex-shrink-0">
+                        MF
+                    </div>
+                    <div>
+                        <p>Dibuat oleh: <span class="text-archery-500 font-bold text-sm">MUHAMMAD FAIZUR RAHMAN</span></p>
+                        <p class="text-slate-400 font-medium">NPM: <span class="text-target-gold font-bold">41182191240050</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Graphic Hero Target & Arrow Interactive SVG -->
+            <div class="md:w-2/5 flex justify-center">
+                <div class="relative w-64 h-64 md:w-80 md:h-80 bg-slate-900/80 rounded-3xl flex items-center justify-center p-6 backdrop-blur-md border-4 border-archery-500 shadow-2xl group cursor-pointer" onclick="spinHeroTarget()">
+                    <svg id="hero-target-svg" viewBox="0 0 200 200" class="w-full h-full target-spin">
+                        <!-- Target Face Outer White -->
+                        <circle cx="100" cy="100" r="90" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+                        <!-- Target Face Black -->
+                        <circle cx="100" cy="100" r="72" fill="#1E293B"/>
+                        <!-- Target Face Blue -->
+                        <circle cx="100" cy="100" r="54" fill="#3B82F6"/>
+                        <!-- Target Face Red -->
+                        <circle cx="100" cy="100" r="36" fill="#EF4444"/>
+                        <!-- Target Face Gold Bullseye -->
+                        <circle cx="100" cy="100" r="18" fill="#FACC15" stroke="#EAB308" stroke-width="2"/>
+                        <circle cx="100" cy="100" r="4" fill="#1E293B"/>
+                        
+                        <!-- Arrow Stuck in Bullseye -->
+                        <g class="arrow-pulse">
+                            <!-- Shaft -->
+                            <line x1="30" y1="170" x2="100" y2="100" stroke="#78350F" stroke-width="4" stroke-linecap="round"/>
+                            <!-- Arrow Head -->
+                            <polygon points="100,100 90,105 105,90" fill="#94A3B8"/>
+                            <!-- Fletching Feathers -->
+                            <polygon points="35,165 25,175 30,180" fill="#10B981"/>
+                            <polygon points="40,170 30,180 35,185" fill="#EF4444"/>
+                        </g>
+                    </svg>
+                    <div class="absolute bottom-3 bg-target-gold text-slate-950 text-xs font-black px-3.5 py-1 rounded-full shadow border border-yellow-500 font-heading">
+                        Sentuh Target Panahan 🎯
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="max-w-5xl mx-auto px-4 py-10 space-y-14 flex-grow">
+
+        <!-- 1. PENGENALAN & PERALATAN PANAHAN -->
+        <section id="pengenalan" class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-slate-200">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="bg-archery-100 text-archery-700 p-3 rounded-2xl text-2xl font-bold">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-slate-900 font-heading">Pengenalan & Peralatan Memanah</h2>
+                        <p class="text-sm text-slate-500">Mengenal perlengkapan wajib olahraga panahan (Archery Equipment)</p>
+                    </div>
+                </div>
+                <button onclick="speakText('Olahraga panahan adalah olahraga ketepatan menggunakan busur untuk menembakkan anak panah ke papan target. Peralatan utamanya meliputi busur panah, anak panah, papan target, serta pelindung lengan dan pelindung jari.')" class="self-start sm:self-center bg-archery-50 hover:bg-archery-100 text-archery-700 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-volume-high text-sm"></i> Suara Narasi
+                </button>
+            </div>
+
+            <!-- Equipment Grid Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                
+                <!-- Busur Panah (Bow) -->
+                <div class="bg-archery-50/50 rounded-2xl p-5 border border-archery-200 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="w-12 h-12 bg-archery-500 text-slate-950 rounded-xl flex items-center justify-center text-xl font-bold mb-3 shadow">
+                            🏹
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">Busur (Bow)</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            Alat utama pembawa energi dorong. Terdiri dari *Riser* (pegangan tengah), *Limb* (lengan busur atas/bawah), dan *String* (tali busur).
+                        </p>
+                    </div>
+                    <button onclick="speakText('Busur panah terdiri dari riser sebagai pegangan utama, dua limb sebagai penarik daya dorong, dan tali busur atau string.')" class="text-xs text-archery-700 font-bold hover:underline flex items-center gap-1">
+                        <i class="fa-solid fa-volume-high"></i> Dengarkan
+                    </button>
+                </div>
+
+                <!-- Anak Panah (Arrow) -->
+                <div class="bg-archery-50/50 rounded-2xl p-5 border border-archery-200 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="w-12 h-12 bg-archery-500 text-slate-950 rounded-xl flex items-center justify-center text-xl font-bold mb-3 shadow">
+                            📍
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">Anak Panah (Arrow)</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            Proyektil meluncur. Terdiri dari *Point* (ujung tajam), *Shaft* (batang), *Fletching* (bulu penyeimbang), dan *Nock* (takik ekor tali).
+                        </p>
+                    </div>
+                    <button onclick="speakText('Anak panah terdiri dari empat bagian: point atau mata panah, shaft atau batang, fletching atau bulu penyeimbang, dan nock di bagian ekor.')" class="text-xs text-archery-700 font-bold hover:underline flex items-center gap-1">
+                        <i class="fa-solid fa-volume-high"></i> Dengarkan
+                    </button>
+                </div>
+
+                <!-- Papan Target (Target Face) -->
+                <div class="bg-archery-50/50 rounded-2xl p-5 border border-archery-200 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="w-12 h-12 bg-archery-500 text-slate-950 rounded-xl flex items-center justify-center text-xl font-bold mb-3 shadow">
+                            🎯
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">Target Face</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            Sasaran tembak dengan 5 lingkaran warna standar: Kuning Emas (10-9 poin), Merah (8-7), Biru (6-5), Hitam (4-3), dan Putih (2-1).
+                        </p>
+                    </div>
+                    <button onclick="speakText('Target face adalah papan sasaran lingkaran berwarna: kuning emas nilai sepuluh dan sembilan, merah delapan dan tujuh, biru enam dan lima, hitam empat dan tiga, serta putih dua dan satu.')" class="text-xs text-archery-700 font-bold hover:underline flex items-center gap-1">
+                        <i class="fa-solid fa-volume-high"></i> Dengarkan
+                    </button>
+                </div>
+
+                <!-- Safety Gear (Arm Guard & Finger Tab) -->
+                <div class="bg-archery-50/50 rounded-2xl p-5 border border-archery-200 flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="w-12 h-12 bg-archery-500 text-slate-950 rounded-xl flex items-center justify-center text-xl font-bold mb-3 shadow">
+                            🛡️
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">Pelindung Diri</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                            *Arm Guard* melindungi lengan dari gesekan tali busur, dan *Finger Tab* melindungi jari tangan saat menarik dan melepas tali.
+                        </p>
+                    </div>
+                    <button onclick="speakText('Pelindung diri wajib saat memanah yaitu Arm Guard untuk melindungi lengan dan Finger Tab untuk melindungi jari jemari.')" class="text-xs text-archery-700 font-bold hover:underline flex items-center gap-1">
+                        <i class="fa-solid fa-volume-high"></i> Dengarkan
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 2. SIMULATOR CANVAS 2D PANAHAN INTERAKTIF -->
+        <section id="ai-simulator" class="bg-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-archery-500 relative">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div>
+                    <span class="bg-archery-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1 font-heading">
+                        <i class="fa-solid fa-crosshair"></i> Simulator 2D Physical Engine
+                    </span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-white mt-1 font-heading">SIMULATOR MEMANAH TARGET 🎯</h2>
+                    <p class="text-slate-300 text-sm">Atur sudut elevasi, kekencangan tarikan busur, lalu tekan tombol **Tembak Panah** untuk memanah target!</p>
+                </div>
+
+                <!-- Score Board Stats -->
+                <div class="flex items-center gap-3 bg-slate-950 px-4 py-2 rounded-2xl border border-slate-700">
+                    <div class="text-center">
+                        <span class="text-xs text-slate-400 block font-heading uppercase">Skor Tembakan</span>
+                        <span id="last-score-display" class="text-2xl font-black text-target-gold font-heading">0 Pts</span>
+                    </div>
+                    <div class="h-8 w-px bg-slate-800"></div>
+                    <div class="text-center">
+                        <span class="text-xs text-slate-400 block font-heading uppercase">Total Tembakan</span>
+                        <span id="shots-count-display" class="text-xl font-bold text-white font-heading">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Viewport -->
+            <div class="relative bg-gradient-to-b from-sky-900 via-slate-900 to-archery-950 rounded-2xl overflow-hidden border-4 border-slate-700 shadow-inner h-80 md:h-96 flex items-center justify-center">
+                <canvas id="archeryCanvas" class="w-full h-full"></canvas>
+
+                <!-- Floating Canvas Control Overlay -->
+                <div class="absolute bottom-3 left-3 right-3 bg-slate-950/90 backdrop-blur-md p-3 rounded-xl border border-white/10 flex flex-wrap items-center justify-between gap-3 text-xs">
+                    
+                    <!-- Angle Control -->
+                    <div class="flex items-center gap-2">
+                        <label class="text-slate-300 font-bold font-heading">Sudut: <span id="angle-val" class="text-archery-500 font-black">15°</span></label>
+                        <input type="range" id="angle-slider" min="-10" max="45" value="15" class="w-24 md:w-32 accent-emerald-500 cursor-pointer">
+                    </div>
+
+                    <!-- Power Control -->
+                    <div class="flex items-center gap-2">
+                        <label class="text-slate-300 font-bold font-heading">Daya: <span id="power-val" class="text-target-gold font-black">75%</span></label>
+                        <input type="range" id="power-slider" min="30" max="100" value="75" class="w-24 md:w-32 accent-yellow-400 cursor-pointer">
+                    </div>
+
+                    <!-- Action Shoot Button -->
+                    <div class="flex items-center gap-2">
+                        <button onclick="shootArrowAction()" id="btn-shoot-arrow" class="bg-archery-500 hover:bg-archery-600 text-slate-950 font-black px-5 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-lg transform active:scale-95 transition font-heading">
+                            <i class="fa-solid fa-location-arrow text-sm"></i> TEMBAK PANAH!
+                        </button>
+                        <button onclick="resetSimulator()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-3 py-2 rounded-xl text-xs font-heading">
+                            <i class="fa-solid fa-rotate-left"></i> Reset
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            
+            <p class="text-xs text-slate-400 text-center mt-3">
+                💡 *Petunjuk:* Sesuaikan sudut dan daya dorong busur agar anak panah tepat menancap di lingkaran kuning Bullseye (10 poin)!
+            </p>
+        </section>
+
+        <!-- 3. MATERI TEKNIK DASAR MEMANAH (9 LANGKAH) -->
+        <section id="teknik" class="space-y-6">
+            <div class="text-center max-w-2xl mx-auto">
+                <span class="bg-archery-100 text-archery-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider font-heading">Prosedur Standar Panahan</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 mt-2 font-heading">LANGKAH TEKNIK MEMANAH (9 STEPS)</h2>
+                <p class="text-slate-600 text-sm mt-1">Tekan tombol detail atau tombol suara di bawah untuk memahami urutan gerakan yang benar!</p>
+            </div>
+
+            <!-- Steps Grid (9 Steps) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                <!-- Step 1: Stance -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-slate-200 flex flex-col justify-between transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-archery-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-lg font-heading">Step 1</span>
+                            <button onclick="speakText('Satu. Stance atau Sikap Berdiri. Berdiri tegak dan seimbang menyamping arah target dengan membuka kaki selebar bahu.')" class="text-archery-700 hover:text-archery-900 text-xs font-bold">
+                                <i class="fa-solid fa-volume-high"></i> Suara
+                            </button>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">1. Stance (Sikap Berdiri)</h3>
+                        <p class="text-xs text-slate-600 mb-3">Berdiri tegak menyamping sasaran, kaki dibuka selebar bahu secara seimbang dan kokoh.</p>
+                    </div>
+                    <button onclick="openModal('stance')" class="w-full bg-archery-50 hover:bg-archery-500 hover:text-slate-950 text-archery-800 font-bold py-2 rounded-xl transition text-xs font-heading">
+                        Lihat Penjelasan Detail &rarr;
+                    </button>
+                </div>
+
+                <!-- Step 2: Nocking -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-slate-200 flex flex-col justify-between transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-archery-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-lg font-heading">Step 2</span>
+                            <button onclick="speakText('Dua. Nocking atau Memasang Anak Panah. Memasang ekor anak panah pada nock receiver tali busur sampai berbunyi klik.')" class="text-archery-700 hover:text-archery-900 text-xs font-bold">
+                                <i class="fa-solid fa-volume-high"></i> Suara
+                            </button>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">2. Nocking (Memasang Anak Panah)</h3>
+                        <p class="text-xs text-slate-600 mb-3">Memasukkan alur ekor anak panah (*nock*) ke tali busur hingga mengunci sempurna.</p>
+                    </div>
+                    <button onclick="openModal('nocking')" class="w-full bg-archery-50 hover:bg-archery-500 hover:text-slate-950 text-archery-800 font-bold py-2 rounded-xl transition text-xs font-heading">
+                        Lihat Penjelasan Detail &rarr;
+                    </button>
+                </div>
+
+                <!-- Step 3: Extend / Set-Up -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-slate-200 flex flex-col justify-between transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-archery-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-lg font-heading">Step 3</span>
+                            <button onclick="speakText('Tiga. Set-Up atau Posisi Bersiap. Mengangkat busur lurus lurus ke depan menghadap sasaran target.')" class="text-archery-700 hover:text-archery-900 text-xs font-bold">
+                                <i class="fa-solid fa-volume-high"></i> Suara
+                            </button>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">3. Set-Up (Posisi Bersiap)</h3>
+                        <p class="text-xs text-slate-600 mb-3">Mengangkat busur ke depan setinggi dada dengan lengan depan lurus memegang *grip*.</p>
+                    </div>
+                    <button onclick="openModal('setup')" class="w-full bg-archery-50 hover:bg-archery-500 hover:text-slate-950 text-archery-800 font-bold py-2 rounded-xl transition text-xs font-heading">
+                        Lihat Penjelasan Detail &rarr;
+                    </button>
+                </div>
+
+                <!-- Step 4: Drawing -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-slate-200 flex flex-col justify-between transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-archery-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-lg font-heading">Step 4</span>
+                            <button onclick="speakText('Empat. Drawing atau Menarik Tali. Menarik tali busur menggunakan tiga jari tangan penarik secara lurus hingga mendekati wajah.')" class="text-archery-700 hover:text-archery-900 text-xs font-bold">
+                                <i class="fa-solid fa-volume-high"></i> Suara
+                            </button>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">4. Drawing (Menarik Tali)</h3>
+                        <p class="text-xs text-slate-600 mb-3">Menarik tali busur dengan 3 jari (*Finger Tab*) secara lembut menggunakan otot punggung.</p>
+                    </div>
+                    <button onclick="openModal('drawing')" class="w-full bg-archery-50 hover:bg-archery-500 hover:text-slate-950 text-archery-800 font-bold py-2 rounded-xl transition text-xs font-heading">
+                        Lihat Penjelasan Detail &rarr;
+                    </button>
+                </div>
+
+                <!-- Step 5: Anchoring -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-slate-200 flex flex-col justify-between transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-archery-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-lg font-heading">Step 5</span>
+                            <button onclick="speakText('Lima. Anchoring atau Penjangkaran. Menempelkan tangan penarik pada titik tumpu wajah yang konsisten seperti di bawah dagu.')" class="text-archery-700 hover:text-archery-900 text-xs font-bold">
+                                <i class="fa-solid fa-volume-high"></i> Suara
+                            </button>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">5. Anchoring (Penjangkaran)</h3>
+                        <p class="text-xs text-slate-600 mb-3">Menempelkan jari penarik di titik jangkar tetap (*anchor point*) pada dagu atau rahang.</p>
+                    </div>
+                    <button onclick="openModal('anchoring')" class="w-full bg-archery-50 hover:bg-archery-500 hover:text-slate-950 text-archery-800 font-bold py-2 rounded-xl transition text-xs font-heading">
+                        Lihat Penjelasan Detail &rarr;
+                    </button>
+                </div>
+
+                <!-- Step 6: Aiming -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-slate-200 flex flex-col justify-between transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-archery-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-lg font-heading">Step 6</span>
+                            <button onclick="speakText('Enam. Aiming atau Membidik. Membidikkan ujung anak panah atau visor pejera tepat ke tengah lingkaran target.')" class="text-archery-700 hover:text-archery-900 text-xs font-bold">
+                                <i class="fa-solid fa-volume-high"></i> Suara
+                            </button>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">6. Aiming (Membidik)</h3>
+                        <p class="text-xs text-slate-600 mb-3">Mengarahkan mata fokus melalui pisir (*sight*) atau mata panah ke titik pusat *Bullseye*.</p>
+                    </div>
+                    <button onclick="openModal('aiming')" class="w-full bg-archery-50 hover:bg-archery-500 hover:text-slate-950 text-archery-800 font-bold py-2 rounded-xl transition text-xs font-heading">
+                        Lihat Penjelasan Detail &rarr;
+                    </button>
+                </div>
+
+                <!-- Step 7: Release -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-slate-200 flex flex-col justify-between transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-archery-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-lg font-heading">Step 7</span>
+                            <button onclick="speakText('Tujuh. Release atau Melepas Tali. Membuka ketiga jari penarik secara rileks agar tali terluncur lancar tanpa kejutan.')" class="text-archery-700 hover:text-archery-900 text-xs font-bold">
+                                <i class="fa-solid fa-volume-high"></i> Suara
+                            </button>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">7. Release (Melepas Tali)</h3>
+                        <p class="text-xs text-slate-600 mb-3">Membuka ketiga jari secara rileks agar tali membebas tanpa memetik (*plucking*).</p>
+                    </div>
+                    <button onclick="openModal('release')" class="w-full bg-archery-50 hover:bg-archery-500 hover:text-slate-950 text-archery-800 font-bold py-2 rounded-xl transition text-xs font-heading">
+                        Lihat Penjelasan Detail &rarr;
+                    </button>
+                </div>
+
+                <!-- Step 8: Follow Through -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-slate-200 flex flex-col justify-between transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-archery-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-lg font-heading">Step 8</span>
+                            <button onclick="speakText('Delapan. Follow Through atau Gerak Lanjutan. Mempertahankan posisi tubuh dan pandangan tetap fokus hingga anak panah menancap di papan target.')" class="text-archery-700 hover:text-archery-900 text-xs font-bold">
+                                <i class="fa-solid fa-volume-high"></i> Suara
+                            </button>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">8. Follow Through (Gerak Lanjut)</h3>
+                        <p class="text-xs text-slate-600 mb-3">Menahan posisi tubuh dan mata beberapa detik hingga anak panah menancap di target.</p>
+                    </div>
+                    <button onclick="openModal('followthrough')" class="w-full bg-archery-50 hover:bg-archery-500 hover:text-slate-950 text-archery-800 font-bold py-2 rounded-xl transition text-xs font-heading">
+                        Lihat Penjelasan Detail &rarr;
+                    </button>
+                </div>
+
+                <!-- Step 9: Relax / Evaluation -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-slate-200 flex flex-col justify-between transition">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-archery-500 text-slate-950 font-bold text-xs px-2.5 py-1 rounded-lg font-heading">Step 9</span>
+                            <button onclick="speakText('Sembilan. Relax dan Evaluasi. Menurunkan busur panah dan merilekskan otot sebelum ronde tembakan berikutnya.')" class="text-archery-700 hover:text-archery-900 text-xs font-bold">
+                                <i class="fa-solid fa-volume-high"></i> Suara
+                            </button>
+                        </div>
+                        <h3 class="font-heading text-lg font-bold text-slate-900 mb-1">9. Relax & Evaluasi</h3>
+                        <p class="text-xs text-slate-600 mb-3">Menurunkan busur dengan aman dan mengatur napas rileks untuk evaluasi hasil.</p>
+                    </div>
+                    <button onclick="openModal('relax')" class="w-full bg-archery-50 hover:bg-archery-500 hover:text-slate-950 text-archery-800 font-bold py-2 rounded-xl transition text-xs font-heading">
+                        Lihat Penjelasan Detail &rarr;
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 4. ATURAN PENILAIAN SKOR & KESELAMATAN -->
+        <section id="penilaian" class="bg-white rounded-3xl p-6 md:p-8 shadow-md border-2 border-slate-200">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="bg-target-gold text-slate-950 p-3 rounded-2xl text-2xl font-bold">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-slate-900 font-heading">Penilaian Skor & Keselamatan Memanah</h2>
+                    <p class="text-sm text-slate-500">Standar nilai lingkaran target face dan tata tertib di lapangan panahan</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                
+                <!-- Target Visual Scoring breakdown -->
+                <div class="space-y-3">
+                    <h3 class="font-heading font-bold text-lg text-slate-900">Sistem Skor Papan Target (Target Face):</h3>
+                    
+                    <div class="space-y-2 text-xs md:text-sm font-semibold">
+                        <div class="flex items-center justify-between p-2.5 bg-yellow-100 text-yellow-950 rounded-xl border border-yellow-300">
+                            <span class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-target-gold inline-block border border-amber-500"></span> Lingkaran Dalam (Gold / Bullseye)</span>
+                            <span class="font-heading font-black text-base">10 / 9 Poin</span>
+                        </div>
+                        <div class="flex items-center justify-between p-2.5 bg-red-100 text-red-950 rounded-xl border border-red-300">
+                            <span class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-target-red inline-block"></span> Lingkaran Merah (Red Ring)</span>
+                            <span class="font-heading font-black text-base">8 / 7 Poin</span>
+                        </div>
+                        <div class="flex items-center justify-between p-2.5 bg-blue-100 text-blue-950 rounded-xl border border-blue-300">
+                            <span class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-target-blue inline-block"></span> Lingkaran Biru (Blue Ring)</span>
+                            <span class="font-heading font-black text-base">6 / 5 Poin</span>
+                        </div>
+                        <div class="flex items-center justify-between p-2.5 bg-slate-200 text-slate-950 rounded-xl border border-slate-400">
+                            <span class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-slate-900 inline-block"></span> Lingkaran Hitam (Black Ring)</span>
+                            <span class="font-heading font-black text-base">4 / 3 Poin</span>
+                        </div>
+                        <div class="flex items-center justify-between p-2.5 bg-slate-50 text-slate-800 rounded-xl border border-slate-300">
+                            <span class="flex items-center gap-2"><span class="w-4 h-4 rounded-full bg-white inline-block border border-slate-400"></span> Lingkaran Putih (White Ring)</span>
+                            <span class="font-heading font-black text-base">2 / 1 Poin</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Safety Rules Card -->
+                <div class="bg-archery-900 text-white rounded-2xl p-6 border-2 border-archery-500 space-y-4 shadow-lg">
+                    <h3 class="font-heading font-bold text-xl text-target-gold flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved"></i> 4 Aturan Utama Keselamatan
+                    </h3>
+                    <ul class="space-y-2.5 text-xs md:text-sm text-slate-200">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-target-gold mt-1"></i>
+                            <span>Dilarang mengarahkan anak panah ke arah manusia atau hewan dalam kondisi apa pun!</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-target-gold mt-1"></i>
+                            <span>Hanya menarik dan melepas tali busur saat ada instruksi aman dari instruktur/pelatih.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-target-gold mt-1"></i>
+                            <span>Gunakan alat pelindung diri (*Arm Guard* & *Finger Tab*) secara lengkap sebelum menembak.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-triangle-exclamation text-target-gold mt-1"></i>
+                            <span>Mengambil anak panah di papan target hanya dilakukan setelah semua pemanah selesai melepas tembakan.</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 5. KUIS INTERAKTIF PANAHAN -->
+        <section id="kuis" class="bg-gradient-to-br from-slate-950 via-slate-900 to-archery-950 text-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-archery-500 relative overflow-hidden">
+            <div class="text-center max-w-xl mx-auto mb-8">
+                <span class="bg-target-gold text-slate-950 px-4 py-1 rounded-full text-xs font-black uppercase tracking-wider inline-block font-heading">
+                    🏆 Uji Pemahaman Materi Panahan
+                </span>
+                <h2 class="text-3xl font-extrabold text-white mt-2 font-heading">KUIS INTERAKTIF MEMANAH</h2>
+                <p class="text-slate-300 text-sm">Jawab 5 pertanyaan kuis di bawah ini dan raih skor tertinggi 100!</p>
+            </div>
+
+            <!-- Quiz Main Box -->
+            <div id="quiz-container" class="bg-white text-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl max-w-2xl mx-auto">
+                <div class="flex justify-between items-center mb-6 pb-4 border-b border-slate-200">
+                    <span id="question-number" class="font-heading font-bold text-archery-700 bg-archery-100 px-3 py-1 rounded-xl text-xs">Pertanyaan 1 dari 5</span>
+                    <div class="flex items-center gap-1 text-target-gold font-bold text-sm" id="star-display">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="mb-6 flex items-start justify-between gap-3">
+                    <h3 id="question-text" class="text-base md:text-lg font-bold text-slate-900 leading-snug">Memuat Pertanyaan...</h3>
+                    <button onclick="readCurrentQuestion()" class="p-2 bg-slate-100 hover:bg-slate-200 text-archery-700 rounded-lg text-xs font-bold transition flex-shrink-0" title="Bacakan Soal Audio">
+                        <i class="fa-solid fa-volume-high"></i>
+                    </button>
+                </div>
+
+                <div id="options-container" class="grid grid-cols-1 gap-3">
+                    <!-- Options JS injected -->
+                </div>
+
+                <div id="feedback-box" class="hidden mt-4 p-4 rounded-xl text-center font-bold text-xs md:text-sm"></div>
+
+                <div class="mt-6 flex justify-end">
+                    <button id="next-btn" onclick="nextQuestion()" class="hidden bg-archery-500 hover:bg-archery-600 text-slate-950 font-bold px-6 py-2.5 rounded-xl transition text-xs flex items-center gap-2 shadow font-heading">
+                        Pertanyaan Selanjutnya <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Final Result Box -->
+            <div id="result-container" class="hidden bg-white text-slate-800 rounded-2xl p-8 text-center shadow-2xl max-w-lg mx-auto">
+                <div class="w-20 h-20 bg-yellow-100 text-target-gold rounded-full flex items-center justify-center mx-auto text-4xl mb-4 shadow-inner border border-yellow-300">
+                    <i id="result-icon" class="fa-solid fa-trophy"></i>
+                </div>
+                <h3 class="text-2xl font-black text-slate-900 mb-1 font-heading">KUIS SELESAI!</h3>
+                <p class="text-xs text-slate-500 mb-2">Nilai Akhir Kamu:</p>
+                <div class="text-5xl font-black text-archery-600 mb-4 font-heading" id="final-score">100</div>
+                <p id="result-message" class="text-slate-700 text-sm font-semibold mb-6">Luar biasa! Kamu memahami teknik panahan dengan sangat baik!</p>
+                <button onclick="resetQuiz()" class="bg-archery-500 hover:bg-archery-600 text-slate-950 font-extrabold px-8 py-3 rounded-2xl shadow-lg transition transform hover:-translate-y-1 inline-flex items-center gap-2 text-sm font-heading">
+                    <i class="fa-solid fa-rotate-right"></i> Ulangi Kuis
+                </button>
+            </div>
+        </section>
+
+        <!-- 6. PROFIL PEMBUAT LENGKAP -->
+        <section id="pembuat" class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-archery-500 relative overflow-hidden">
+            <div class="flex flex-col md:flex-row items-center gap-6 relative z-10">
+                <div class="w-28 h-28 md:w-36 md:h-36 bg-gradient-to-br from-archery-500 to-archery-800 text-slate-950 rounded-3xl flex items-center justify-center text-5xl md:text-6xl shadow-lg border-4 border-slate-100 flex-shrink-0 font-heading font-black">
+                    🎯
+                </div>
+                <div class="text-center md:text-left flex-grow">
+                    <span class="bg-archery-100 text-archery-800 px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider inline-block mb-2 font-heading">
+                        Pengembang Media Pembelajaran PJOK
+                    </span>
+                    <h3 class="text-2xl md:text-3xl font-black text-slate-900 font-heading">MUHAMMAD FAIZUR RAHMAN</h3>
+                    <p class="text-archery-600 font-bold text-base md:text-lg mt-0.5 font-heading">
+                        NPM: <span class="text-slate-900 tracking-wider">41182191240050</span>
+                    </p>
+                    <p class="text-slate-500 text-xs md:text-sm mt-3 leading-relaxed">
+                        Media Pembelajaran PJOK Olahraga Panahan (*Archery*) ini dikembangkan secara interaktif dengan animasi visual simulator 2D, fitur audio pembaca narasi, serta kuis penilaian mandiri untuk mendukung pembelajaran olahraga panahan yang modern, aman, dan mudah dipahami.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 py-6 border-t-4 border-archery-500 mt-auto">
+        <div class="max-w-5xl mx-auto px-4 text-center text-xs md:text-sm space-y-1">
+            <p class="font-semibold text-slate-200">© 2026 PJOK - Media Pembelajaran Olahraga Panahan Interaktif</p>
+            <p class="text-slate-400">
+                Dibuat oleh: <span class="text-archery-500 font-bold">MUHAMMAD FAIZUR RAHMAN</span> | NPM: <span class="text-target-gold font-bold">41182191240050</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- MODAL DETAIL LANGKAH TEKNIK -->
+    <div id="detail-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 relative shadow-2xl border-4 border-archery-500">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100">
+                &times;
+            </button>
+            <div id="modal-content" class="space-y-4">
+                <!-- Injected via JS -->
+            </div>
+            <button onclick="closeModal()" class="mt-6 w-full bg-archery-500 text-slate-950 font-bold py-2.5 rounded-xl hover:bg-archery-600 hover:text-white transition text-xs font-heading">
+                Saya Sudah Paham
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC SUITE -->
+    <script>
+        // --- 1. Mobile Menu Toggle ---
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // --- 2. Hero Target Spin Interactive ---
+        function spinHeroTarget() {
+            const svg = document.getElementById('hero-target-svg');
+            svg.style.transform = 'scale(1.15) rotate(360deg)';
+            playHitSound(10);
+            setTimeout(() => {
+                svg.style.transform = 'scale(1.0) rotate(0deg)';
+            }, 600);
+        }
+
+        // --- 3. Text to Speech (TTS Audio Reader) ---
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.95;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // --- 4. Web Audio API Synthesizer (No external audio files) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playBowDrawSound() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(280, audioCtx.currentTime + 0.3);
+
+            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+
+            osc.start(audioCtx.currentTime);
+            osc.stop(audioCtx.currentTime + 0.3);
+        }
+
+        function playArrowReleaseSound() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.18);
+
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
+
+            osc.start(audioCtx.currentTime);
+            osc.stop(audioCtx.currentTime + 0.18);
+        }
+
+        function playHitSound(score) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.type = 'triangle';
+            // Higher pitch thud for gold, lower for outer rings
+            const freq = score >= 9 ? 440 : (score >= 5 ? 320 : 220);
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.2);
+
+            gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+
+            osc.start(audioCtx.currentTime);
+            osc.stop(audioCtx.currentTime + 0.2);
+        }
+
+        function playQuizSound(isCorrect) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (isCorrect) {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+                osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                osc.start(audioCtx.currentTime);
+                osc.stop(audioCtx.currentTime + 0.4);
+            } else {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(160, audioCtx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                osc.start(audioCtx.currentTime);
+                osc.stop(audioCtx.currentTime + 0.35);
+            }
+        }
+
+        // --- 5. Canvas 2D Archery Physical Simulator ---
+        const canvas = document.getElementById('archeryCanvas');
+        const ctx = canvas.getContext('2d');
+        const angleSlider = document.getElementById('angle-slider');
+        const powerSlider = document.getElementById('power-slider');
+        const angleValDisplay = document.getElementById('angle-val');
+        const powerValDisplay = document.getElementById('power-val');
+
+        let isFlying = false;
+        let arrow = { x: 0, y: 0, vx: 0, vy: 0, stuck: false, hitScore: 0 };
+        let stuckArrows = [];
+        let totalShots = 0;
+        let lastScore = 0;
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        angleSlider.addEventListener('input', (e) => {
+            angleValDisplay.textContent = `${e.target.value}°`;
+        });
+        powerSlider.addEventListener('input', (e) => {
+            powerValDisplay.textContent = `${e.target.value}%`;
+        });
+
+        function resetSimulator() {
+            isFlying = false;
+            stuckArrows = [];
+            totalShots = 0;
+            lastScore = 0;
+            document.getElementById('last-score-display').textContent = `0 Pts`;
+            document.getElementById('shots-count-display').textContent = `0`;
+        }
+
+        function shootArrowAction() {
+            if (isFlying) return;
+            playBowDrawSound();
+            setTimeout(() => {
+                playArrowReleaseSound();
+                const angleDeg = parseFloat(angleSlider.value);
+                const power = parseFloat(powerSlider.value);
+                
+                const angleRad = -angleDeg * (Math.PI / 180);
+                const speed = (power / 100) * 22 + 8;
+
+                const archerX = 80;
+                const archerY = canvas.height - 90;
+
+                arrow = {
+                    x: archerX,
+                    y: archerY,
+                    vx: Math.cos(angleRad) * speed,
+                    vy: Math.sin(angleRad) * speed,
+                    stuck: false,
+                    hitScore: 0
+                };
+                isFlying = true;
+                totalShots++;
+                document.getElementById('shots-count-display').textContent = totalShots;
+            }, 200);
+        }
+
+        function calculateScore(targetY, arrowY) {
+            const diff = Math.abs(targetY - arrowY);
+            if (diff <= 12) return 10;
+            if (diff <= 24) return 9;
+            if (diff <= 38) return 8;
+            if (diff <= 52) return 7;
+            if (diff <= 66) return 6;
+            if (diff <= 80) return 5;
+            if (diff <= 94) return 4;
+            if (diff <= 108) return 3;
+            if (diff <= 120) return 2;
+            if (diff <= 135) return 1;
+            return 0; // Miss
+        }
+
+        function drawTargetBoard(targetX, targetY) {
+            // Target Stand / Legs
+            ctx.strokeStyle = "#475569";
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.moveTo(targetX, targetY + 100);
+            ctx.lineTo(targetX - 25, canvas.height - 20);
+            ctx.moveTo(targetX, targetY + 100);
+            ctx.lineTo(targetX + 25, canvas.height - 20);
+            ctx.stroke();
+
+            // Outer Stand Backing
+            ctx.fillStyle = "#E2E8F0";
+            ctx.fillRect(targetX - 8, targetY - 140, 16, 280);
+
+            // Target Rings (R: 135, 108, 80, 52, 24)
+            const rings = [
+                { r: 135, color: '#F8FAFC' }, // White
+                { r: 108, color: '#1E293B' }, // Black
+                { r: 80,  color: '#3B82F6' }, // Blue
+                { r: 52,  color: '#EF4444' }, // Red
+                { r: 24,  color: '#FACC15' }  // Gold Bullseye
+            ];
+
+            rings.forEach(ring => {
+                ctx.fillStyle = ring.color;
+                ctx.fillRect(targetX - 4, targetY - ring.r, 8, ring.r * 2);
+            });
+        }
+
+        function drawArcher(x, y) {
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = "#FFFFFF";
+
+            // Body & Head
+            ctx.fillStyle = "#10B981";
+            ctx.beginPath(); ctx.arc(x, y - 45, 11, 0, Math.PI * 2); ctx.fill(); // Head
+            ctx.beginPath(); ctx.moveTo(x, y - 34); ctx.lineTo(x, y + 15); ctx.stroke(); // Torso
+            ctx.beginPath(); ctx.moveTo(x, y + 15); ctx.lineTo(x - 15, y + 55); ctx.stroke(); // Left Leg
+            ctx.beginPath(); ctx.moveTo(x, y + 15); ctx.lineTo(x + 15, y + 55); ctx.stroke(); // Right Leg
+
+            // Extended Bow Arm
+            const angleDeg = parseFloat(angleSlider.value);
+            const angleRad = -angleDeg * (Math.PI / 180);
+            const armLen = 32;
+            const bowX = x + Math.cos(angleRad) * armLen;
+            const bowY = (y - 20) + Math.sin(angleRad) * armLen;
+
+            ctx.beginPath(); ctx.moveTo(x, y - 20); ctx.lineTo(bowX, bowY); ctx.stroke();
+
+            // Bow Limb Arc
+            ctx.save();
+            ctx.translate(bowX, bowY);
+            ctx.rotate(angleRad);
+            ctx.strokeStyle = "#FACC15";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(0, 0, 35, -Math.PI / 2.2, Math.PI / 2.2);
+            ctx.stroke();
+
+            // String
+            ctx.strokeStyle = "#FFFFFF";
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(Math.cos(-Math.PI/2.2)*35, Math.sin(-Math.PI/2.2)*35);
+            ctx.lineTo(-12, 0);
+            ctx.lineTo(Math.cos(Math.PI/2.2)*35, Math.sin(Math.PI/2.2)*35);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function drawArrowObj(x, y, vx, vy) {
+            ctx.save();
+            ctx.translate(x, y);
+            const angle = Math.atan2(vy, vx);
+            ctx.rotate(angle);
+
+            // Shaft
+            ctx.strokeStyle = "#78350F";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(-35, 0);
+            ctx.lineTo(0, 0);
+            ctx.stroke();
+
+            // Point Head
+            ctx.fillStyle = "#CBD5E1";
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(-7, -3);
+            ctx.lineTo(-7, 3);
+            ctx.closePath();
+            ctx.fill();
+
+            // Fletching Feathers
+            ctx.fillStyle = "#10B981";
+            ctx.fillRect(-33, -5, 8, 3);
+            ctx.fillStyle = "#EF4444";
+            ctx.fillRect(-33, 2, 8, 3);
+
+            ctx.restore();
+        }
+
+        function renderCanvasEngine() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const w = canvas.width;
+            const h = canvas.height;
+            const groundY = h - 20;
+            const targetX = w - 90;
+            const targetY = h - 160;
+
+            // Ground Grass
+            ctx.fillStyle = "#166534";
+            ctx.fillRect(0, groundY, w, 20);
+
+            // Archer & Target
+            drawArcher(80, groundY - 55);
+            drawTargetBoard(targetX, targetY);
+
+            // Draw Previously Stuck Arrows
+            stuckArrows.forEach(stk => {
+                drawArrowObj(stk.x, stk.y, 1, 0);
+            });
+
+            // Update & Draw Active Flying Arrow
+            if (isFlying) {
+                arrow.vy += 0.22; // Gravity
+                arrow.x += arrow.vx;
+                arrow.y += arrow.vy;
+
+                // Check collision with Target Line
+                if (arrow.x >= targetX - 5 && arrow.x <= targetX + 15) {
+                    const score = calculateScore(targetY, arrow.y);
+                    arrow.hitScore = score;
+                    arrow.stuck = true;
+                    isFlying = false;
+
+                    stuckArrows.push({ x: targetX - 2, y: arrow.y });
+                    lastScore = score;
+                    document.getElementById('last-score-display').textContent = `${score} Pts`;
+
+                    playHitSound(score);
+                    if (score >= 9) {
+                        confetti({ particleCount: 50, spread: 60, origin: { y: 0.5 } });
+                    }
+                } else if (arrow.y >= groundY || arrow.x > w + 50) {
+                    // Missed ground or out of bounds
+                    isFlying = false;
+                    document.getElementById('last-score-display').textContent = `0 Pts (Meleset)`;
+                } else {
+                    drawArrowObj(arrow.x, arrow.y, arrow.vx, arrow.vy);
+                }
+            }
+
+            requestAnimationFrame(renderCanvasEngine);
+        }
+
+        renderCanvasEngine();
+
+        // --- 6. Step Detail Modals ---
+        const stepModalData = {
+            stance: {
+                title: "Step 1: Stance (Sikap Berdiri)",
+                desc: "Berdiri tegak dengan posisi tubuh menyamping terhadap sasaran target. Buka kedua kaki selebar bahu secara sejajar, distribusikan berat badan seimbang di kedua kaki agar posisi tidak goyah."
+            },
+            nocking: {
+                title: "Step 2: Nocking (Memasang Anak Panah)",
+                desc: "Ambil anak panah dari tabung (*quiver*), pasang takik ekor anak panah (*nock*) ke bagian nocking point pada tali busur hingga terdengar suara 'klik'. Pastikan bulu indeks (*fletching*) menghadap ke luar."
+            },
+            setup: {
+                title: "Step 3: Set-Up (Posisi Bersiap)",
+                desc: "Angkat busur lurus ke depan menghadap sasaran. Lengan penahan busur lurus rileks tanpa mengunci sendi siku, dan tangan penarik bersiap di tali."
+            },
+            drawing: {
+                title: "Step 4: Drawing (Menarik Tali Busur)",
+                desc: "Tarik tali busur lurus ke belakang menggunakan otot-otot punggung (*scapula*) sampai menyentuh area wajah. Tiga jari tangan (*index, middle, ring*) menarik tali dengan lembut."
+            },
+            anchoring: {
+                title: "Step 5: Anchoring (Penjangkaran)",
+                desc: "Menempelkan tangan penarik pada titik penjangkaran (*anchor point*) yang tetap dan konsisten pada bagian wajah, seperti di bawah dagu atau sudut bibir."
+            },
+            aiming: {
+                title: "Step 6: Aiming (Membidik Target)",
+                desc: "Fokuskan pandangan mata dominan mengarahkan ujung pejera (*sight*) atau mata anak panah tepat di pusat lingkaran *Bullseye* (kuning emas) papan target."
+            },
+            release: {
+                title: "Step 7: Release (Melepas Tali Busur)",
+                desc: "Buka ketiga jari tangan penarik secara santai dan halus. Biarkan tali terlepas spontan tanpa ada dorongan atau tarikan dadakan (*plucking*)."
+            },
+            followthrough: {
+                title: "Step 8: Follow Through (Gerak Lanjutan)",
+                desc: "Pertahankan sikap posisi berdiri, lengan busur, dan fokus pandangan mata selama 1-2 detik setelah anak panah lepas sampai menancap di papan target."
+            },
+            relax: {
+                title: "Step 9: Relax & Evaluasi",
+                desc: "Turunkan busur perlahan, atur napas rileks, dan lakukan evaluasi perbaikan tembakan sebelum melangkah ke tembakan berikutnya."
+            }
+        };
+
+        function openModal(key) {
+            const data = stepModalData[key];
+            if (!data) return;
+            const content = document.getElementById('modal-content');
+            content.innerHTML = `
+                <div class="flex items-center gap-3 border-b pb-3">
+                    <div class="bg-archery-500 text-slate-950 p-2 rounded-xl text-xl font-bold font-heading">
+                        🎯
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 font-heading">${data.title}</h3>
+                </div>
+                <p class="text-xs md:text-sm text-slate-700 leading-relaxed">${data.desc}</p>
+            `;
+            document.getElementById('detail-modal').classList.remove('hidden');
+            speakText(data.title + '. ' + data.desc);
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        // --- 7. Interactive Quiz Engine ---
+        const quizQuestions = [
+            {
+                question: "Berapakah nilai poin tertinggi (Bullseye) pada lingkaran pusat berwarna kuning emas pada papan target panahan?",
+                options: ["5 Poin", "7 Poin", "10 Poin", "15 Poin"],
+                answer: 2,
+                explanation: "Lingkaran pusat berwarna kuning emas (Bullseye) memberikan nilai tertinggi 10 poin (dan 9 poin di lingkaran luarnya)."
+            },
+            {
+                question: "Teknik memasang takik ekor anak panah pada tali busur sampai berbunyi 'klik' disebut...",
+                options: ["Stance", "Nocking", "Anchoring", "Release"],
+                answer: 1,
+                explanation: "Nocking adalah tahap memasang ekor anak panah (nock) pada nocking point tali busur."
+            },
+            {
+                question: "Alat keselamatan yang berfungsi melindungi lengan pemanah dari gesekan tali busur adalah...",
+                options: ["Finger Tab", "Arm Guard", "Quiver", "Bow Stand"],
+                answer: 1,
+                explanation: "Arm Guard terpasang di lengan bawah untuk melindungi kulit dari sabetan tali busur saat tembakan dilepas."
+            },
+            {
+                question: "Tahap menempelkan tangan penarik di titik tumpu wajah (seperti bawah dagu) agar posisi konsisten disebut...",
+                options: ["Set-Up", "Drawing", "Anchoring", "Follow Through"],
+                answer: 2,
+                explanation: "Anchoring (Penjangkaran) adalah menempatkan tangan penarik pada titik acuan tetap di wajah."
+            },
+            {
+                question: "Mengapa pemanah harus melakukan 'Follow Through' setelah melepas tali busur?",
+                options: [
+                    "Agar anak panah bisa berbelok di udara",
+                    "Mempertahankan stabilitas tubuh hingga anak panah menancap di target",
+                    "Agar busur tidak patah",
+                    "Untuk menambah berat anak panah"
+                ],
+                answer: 1,
+                explanation: "Follow Through menjaga stabilitas gestur tubuh dan fokus pandangan sehingga laju panah tidak terganggu gerakan mendadak."
+            }
+        ];
+
+        let quizIndex = 0;
+        let quizScore = 0;
+        let isAnswered = false;
+
+        function loadQuizQuestion() {
+            isAnswered = false;
+            const q = quizQuestions[quizIndex];
+            document.getElementById('question-number').textContent = `Pertanyaan ${quizIndex + 1} dari ${quizQuestions.length}`;
+            document.getElementById('question-text').textContent = q.question;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            document.getElementById('feedback-box').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3.5 rounded-xl border-2 border-slate-200 hover:border-archery-500 hover:bg-archery-50 transition text-xs md:text-sm font-semibold text-slate-800 flex items-center justify-between group";
+                btn.innerHTML = `
+                    <span>${String.fromCharCode(65 + idx)}. ${opt}</span>
+                    <i class="fa-regular fa-circle text-slate-300 group-hover:text-archery-500"></i>
+                `;
+                btn.onclick = () => selectQuizOption(idx, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function readCurrentQuestion() {
+            const q = quizQuestions[quizIndex];
+            speakText(`${q.question}. Jawaban A: ${q.options[0]}. B: ${q.options[1]}. C: ${q.options[2]}. D: ${q.options[3]}.`);
+        }
+
+        function selectQuizOption(idx, btn) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const q = quizQuestions[quizIndex];
+            const feedback = document.getElementById('feedback-box');
+            const options = document.getElementById('options-container').children;
+
+            if (idx === q.answer) {
+                quizScore += 20;
+                playQuizSound(true);
+                btn.className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-bold text-xs md:text-sm flex items-center justify-between";
+                btn.querySelector('i').className = "fa-solid fa-circle-check text-emerald-600 text-base";
+
+                feedback.className = "mt-4 p-4 rounded-xl text-center font-bold text-xs md:text-sm bg-emerald-100 text-emerald-900 border border-emerald-300";
+                feedback.innerHTML = `<i class="fa-solid fa-bullseye text-archery-600"></i> Benar Sekali! ${q.explanation}`;
+            } else {
+                playQuizSound(false);
+                btn.className = "w-full text-left p-3.5 rounded-xl border-2 border-rose-400 bg-rose-50 text-rose-950 font-bold text-xs md:text-sm flex items-center justify-between";
+                btn.querySelector('i').className = "fa-solid fa-circle-xmark text-rose-600 text-base";
+
+                options[q.answer].className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-bold text-xs md:text-sm flex items-center justify-between";
+
+                feedback.className = "mt-4 p-4 rounded-xl text-center font-bold text-xs md:text-sm bg-rose-100 text-rose-950 border border-rose-300";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-exclamation text-rose-600"></i> Kurang Tepat! Jawaban benar: ${q.options[q.answer]}. ${q.explanation}`;
+            }
+
+            feedback.classList.remove('hidden');
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.textContent = quizIndex < quizQuestions.length - 1 ? "Pertanyaan Selanjutnya" : "Lihat Hasil Kuis";
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            if (quizIndex < quizQuestions.length - 1) {
+                quizIndex++;
+                loadQuizQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            const res = document.getElementById('result-container');
+            res.classList.remove('hidden');
+
+            document.getElementById('final-score').textContent = quizScore;
+
+            if (quizScore >= 80) {
+                document.getElementById('result-message').textContent = "Hebat Sekali! Kamu adalah seorang pemanah sejati! 🎯🏆";
+                confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+            } else if (quizScore >= 60) {
+                document.getElementById('result-message').textContent = "Bagus! Pelajari lagi beberapa poin teknik agar mencapai skor sempurna!";
+            } else {
+                document.getElementById('result-message').textContent = "Jangan berkecil hati, ulangi materi dan coba kuis lagi ya!";
+            }
+        }
+
+        function resetQuiz() {
+            quizIndex = 0;
+            quizScore = 0;
+            document.getElementById('result-container').classList.add('hidden');
+            document.getElementById('quiz-container').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        window.onload = function() {
+            loadQuizQuestion();
+        };
+    </script>
+</body>
+</html>
